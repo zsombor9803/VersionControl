@@ -32,6 +32,23 @@ namespace gyakorlat4
             Flats = context.Flats.ToList();
         }
 
+        private string GetCell(int x, int y) //hogy ez mit csinál...
+        {
+            string ExcelCoordinate = "";
+            int dividend = y;
+            int modulo;
+
+            while (dividend > 0)
+            {
+                modulo = (dividend - 1) % 26;
+                ExcelCoordinate = Convert.ToChar(65 + modulo).ToString() + ExcelCoordinate;
+                dividend = (int)((dividend - modulo) / 26);
+            }
+            ExcelCoordinate += x.ToString();
+
+            return ExcelCoordinate;
+        }
+
         private void CreateTable()
         {
             string[] headers = new string[]
@@ -46,7 +63,7 @@ namespace gyakorlat4
             }
             object[,] values = new object[Flats.Count, headers.Length]; //flats.count hány sorom van; headers.length hány oszlopom
 
-            int szamlalo = 0
+            int szamlalo = 0;
             foreach (var s in Flats)
             {
                 values[szamlalo, 0] = s.Code;
@@ -64,8 +81,13 @@ namespace gyakorlat4
                 values[szamlalo, 5] = s.NumberOfRooms;
                 values[szamlalo, 6] = s.FloorArea;
                 values[szamlalo, 7] = s.Price;
-                values[szamlalo, 8] = s.Price / s.FloorArea;
+                values[szamlalo, 8] = "";
+                szamlalo++;
             }
+            //biztos nem ide kell, de fogalmam sincs hova kéne
+            xlSheet.get_Range(
+             GetCell(2, 1),
+             GetCell(1 + values.GetLength(0), values.GetLength(1))).Value2 = values;
         }
 
         private void CreateExcel()

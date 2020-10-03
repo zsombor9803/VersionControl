@@ -32,6 +32,42 @@ namespace gyakorlat4
             Flats = context.Flats.ToList();
         }
 
+        private void CreateTable()
+        {
+            string[] headers = new string[]
+            {
+                "Kód","Eladó","Oldal","Kerület","Lift","Szobák száma",
+                "Alapterület (m2)","Ár (mFt)","Négyzetméter ár (Ft/m2)"
+            };
+
+            for (int i = 0; i < headers.Length; i++)
+            {
+                xlSheet.Cells[1, i+1] = headers[i];
+            }
+            object[,] values = new object[Flats.Count, headers.Length]; //flats.count hány sorom van; headers.length hány oszlopom
+
+            int szamlalo = 0
+            foreach (var s in Flats)
+            {
+                values[szamlalo, 0] = s.Code;
+                values[szamlalo, 1] = s.Vendor;
+                values[szamlalo, 2] = s.Side;
+                values[szamlalo, 3] = s.District;
+                if (s.Elevator == true)
+                {
+                    values[szamlalo, 4] = "Van";
+                }
+                else
+                {
+                    values[szamlalo, 4] = "Nincs";
+                }
+                values[szamlalo, 5] = s.NumberOfRooms;
+                values[szamlalo, 6] = s.FloorArea;
+                values[szamlalo, 7] = s.Price;
+                values[szamlalo, 8] = s.Price / s.FloorArea;
+            }
+        }
+
         private void CreateExcel()
         {
             try

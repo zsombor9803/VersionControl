@@ -14,9 +14,12 @@ namespace gyak5
     {
         List<Tick> Ticks;
         PortfolioEntities context = new PortfolioEntities();
+        List<Entities.PortfolioItem> Portfolios = new List<Entities.PortfolioItem>();
+        
         public Form1()
         {
             InitializeComponent();
+            
             Ticks = context.Ticks.ToList();
             dataGridView1.DataSource = Ticks;
         }

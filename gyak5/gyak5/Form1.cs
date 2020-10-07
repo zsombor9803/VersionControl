@@ -24,6 +24,8 @@ namespace gyak5
             dataGridView1.DataSource = Ticks;
 
             CreatePortfolio();
+
+            
         }
 
         private void CreatePortfolio()
@@ -34,6 +36,19 @@ namespace gyak5
             Portfolios.Add(new Entities.PortfolioItem() { Index = "ELMU", Volume = 10 });
 
             dataGridView2.DataSource = Portfolios;
+        }
+
+        private decimal GetPortfolioValue(DateTime date)
+        {
+            decimal value = 0;
+            foreach (var item in Portfolios)
+            {
+                var last = (from x in Ticks
+                            where item.Index == x.Index.Trim()
+                            && date <= x.TradingDay select x).First();
+                value += (decimal)last.Price * item.Volume;
+            }
+            return value;
         }
     }
 }

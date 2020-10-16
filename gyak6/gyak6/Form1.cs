@@ -13,11 +13,11 @@ namespace gyak6
 {
     public partial class Form1 : Form
     {
-        
+        BindingList<Entities.RateData> Rates;
         public Form1()
         {
             InitializeComponent();
-            
+            dataGridView1.DataSource = Rates;
         }
         private void GetExchangeRates()
         {

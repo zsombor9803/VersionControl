@@ -84,6 +84,8 @@ namespace gyak6
             dataGridView1.DataSource = Rates;
             GetExchangeRates();
             dia();
+            BindingList<string> Currencies;
+            //comboBox1.DataSource = Currencies; nem lenne rossz ha felismerné a currenciest
         }
 
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)

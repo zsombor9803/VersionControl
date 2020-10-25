@@ -14,6 +14,8 @@ namespace gyak07
 {
     public partial class Form1 : Form
     {
+        Random rnd = new Random(1234);
+
         List<Person> Population = new List<Person>();
         List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
         List<DeathProbability> deathProbabilities = new List<DeathProbability>();

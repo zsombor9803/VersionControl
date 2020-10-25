@@ -15,6 +15,7 @@ namespace gyak07
         public Form1()
         {
             InitializeComponent();
+            
         }
     }
 }

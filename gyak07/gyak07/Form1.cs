@@ -42,5 +42,25 @@ namespace gyak07
             }
             return population;
         }
+
+        public List<BirthProbability> GetBirthProbabilities(string csvpath)
+        {
+            List<BirthProbability> birthProbabilities = new List<BirthProbability>();
+
+            using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine().Split(';');
+                    birthProbabilities.Add(new BirthProbability()
+                    {
+                        Age = int.Parse(line[0]),
+                        NumberOfChildren = byte.Parse(line[1]),
+                        Death = double.Parse(line[2])
+                    });
+                }
+            }
+            return birthProbabilities;
+        }
     }
 }

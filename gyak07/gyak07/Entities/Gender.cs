@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace gyak07.Entities
 {
-    public class Gender
-    {
-        public enum Gend
+    public enum Gender
         {
             Male = 1, Female = 2
         }
     }
-}

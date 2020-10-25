@@ -21,7 +21,10 @@ namespace gyak07
         public Form1()
         {
             InitializeComponent();
-           
+
+            Population = GetPopulation(@"C:\Temp\nép.csv");
+            BirthProbabilities = GetBirthProbabilities(@"C:\Temp\születés.csv");
+            deathProbabilities = GetDeathProbabilities(@"C:\Temp\halál.csv");
         }
         public List<Person> GetPopulation(string csvpath)
         {
@@ -61,6 +64,26 @@ namespace gyak07
                 }
             }
             return birthProbabilities;
+        }
+
+        public List<DeathProbability> GetDeathProbabilities(string csvpath)
+        {
+            List<DeathProbability> deathProbabilities = new List<DeathProbability>();
+
+            using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine().Split(';');
+                    deathProbabilities.Add(new DeathProbability()
+                    {
+                        Gender = (Gender)Enum.Parse(typeof(Gender), line[0]),
+                        Age = int.Parse(line[1]),
+                        Death = double.Parse(line[2])
+                    });
+                }
+            }
+            return deathProbabilities;
         }
     }
 }

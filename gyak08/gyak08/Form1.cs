@@ -70,7 +70,10 @@ namespace gyak08
 
         private void BALL_Click(object sender, EventArgs e)
         {
-            Factory = new Entities.BallFactory();
+            Factory = new Entities.BallFactory 
+            { 
+                BallColor = button1.BackColor
+            };
         }
 
         private void DisplayNext()

@@ -12,11 +12,11 @@ namespace gyak08
 {
     public partial class Form1 : Form
     {
-        private List<Entities.Ball> _balls = new List<Entities.Ball>();
+        private List<Abstractions.Toy> _toys = new List<Abstractions.Toy>();
         
-        private Entities.BallFactory _factory;       
+        private Abstractions.IToyFactory _factory;       
 
-        public Entities.BallFactory Factory 
+        public Abstractions.IToyFactory Factory 
         {
             get { return _factory; } 
             set { _factory = value; } 
@@ -24,23 +24,24 @@ namespace gyak08
         public Form1()
         {
             InitializeComponent();
-            Factory = new Entities.BallFactory();
+            //Factory = new Entities.BallFactory();
+            Factory = new Entities.CarFactory();
         }
 
         private void createTimer_Tick(object sender, EventArgs e)
         {
-            var ball = Factory.CreateNew();
-            _balls.Add(ball);
-            ball.Left = -ball.Width;
-            mainPanel.Controls.Add(ball);
+            var toy = Factory.CreateNew();
+            _toys.Add(toy);
+            toy.Left = -toy.Width;
+            mainPanel.Controls.Add(toy);
         }
 
         private void conveyorTimer_Tick(object sender, EventArgs e)
         {
             var jobbos = 0;
-            foreach (var item in _balls)
+            foreach (var item in _toys)
             {
-                item.MoveBall();
+                item.MoveToy();
                 if (item.Left> jobbos)
                 {
                     jobbos = item.Left;
@@ -49,9 +50,9 @@ namespace gyak08
 
             if (jobbos > 1000)
             {
-                var oldestBall = _balls[0];
+                var oldestBall = _toys[0];
                 mainPanel.Controls.Remove(oldestBall);
-                _balls.Remove(oldestBall);
+                _toys.Remove(oldestBall);
             }
         }
     }

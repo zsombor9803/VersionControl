@@ -18,11 +18,10 @@ namespace gyak10
         int nbrOfStepsIncrement = 10;
         int generation = 1;
 
-        Brain winnerBrain = null;
-
         GameController gc = new GameController();
         GameArea ga;
 
+        Brain winnerBrain = null;
         public Form1()
         {
             InitializeComponent();
@@ -30,18 +29,15 @@ namespace gyak10
             ga = gc.ActivateDisplay();
             this.Controls.Add(ga);
 
-            gc.AddPlayer();
-            gc.Start(true);
-
             gc.GameOver += Gc_GameOver;
 
             for (int i = 0; i < populationSize; i++)
             {
                 gc.AddPlayer(nbrOfSteps);
             }
-            gc.Start();
 
-            
+            gc.Start(true);
+                     
         }
 
         private void Gc_GameOver(object sender)
@@ -57,7 +53,7 @@ namespace gyak10
             var topPerformers = playerList.Take(populationSize / 2).ToList();
 
             var winners = from p in topPerformers
-                          where !p.IsWinner
+                          where p.IsWinner
                           select p;
             if (winners.Count() > 0)
             {

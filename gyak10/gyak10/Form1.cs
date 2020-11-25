@@ -56,6 +56,17 @@ namespace gyak10
                              select p;
             var topPerformers = playerList.Take(populationSize / 2).ToList();
 
+            var winners = from p in topPerformers
+                          where !p.IsWinner
+                          select p;
+            if (winners.Count() > 0)
+            {
+                winnerBrain = winners.FirstOrDefault().Brain.Clone();
+                gc.GameOver -= Gc_GameOver;
+                button1.Visible = true;
+                return;
+            }
+
             gc.ResetCurrentLevel();
             foreach (var p in topPerformers)
             {
@@ -71,18 +82,16 @@ namespace gyak10
                     gc.AddPlayer(b.Mutate());
             }
 
-            var winners = from p in topPerformers
-                          where p.IsWinner
-                          select p;
-            if (winners.Count() > 0)
-            {
-                winnerBrain = winners.FirstOrDefault().Brain.Clone();
-                gc.GameOver -= Gc_GameOver;
-                return;
-            }
-
-
             gc.Start();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            gc.ResetCurrentLevel();
+            gc.AddPlayer(winnerBrain.Clone());
+            gc.AddPlayer();
+            ga.Focus();
+            gc.Start(true);
         }
     }
 }
